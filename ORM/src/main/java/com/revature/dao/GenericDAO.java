@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface GenericDAO {
     //boolean create(Class<?> clazz);
-    void truncate(Class<?> clazz);
+    boolean truncate(Class<?> clazz);
     int insert(Class<?> clazz, Object obj);
     boolean delete(Class<?> clazz, Object primaryKey);
     boolean update(Class<?> clazz, Object obj);

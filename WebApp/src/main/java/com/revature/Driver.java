@@ -12,11 +12,8 @@ import java.util.Optional;
 public class Driver {
     public static void main(String[] args) {
         /*
-        Logger
-        Unit test
-        Full servlet CRUD methods
+        Jacoco coverage
         Deploy on Elastic Beanstalk
          */
-
     }
 }
