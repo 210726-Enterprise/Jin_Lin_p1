@@ -1,0 +1,6 @@
+com\revature\dao\GenericDaoImpl.class
+com\revature\Driver.class
+com\revature\model\Account.class
+com\revature\model\User.class
+com\revature\dao\GenericDAO.class
+com\revature\util\ConnectionFactory.class
