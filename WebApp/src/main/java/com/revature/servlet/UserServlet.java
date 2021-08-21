@@ -39,6 +39,10 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        service.deleteUser(req, resp);
+        if (req.getParameterMap().containsKey("userId")) {
+            service.deleteUser(req, resp);
+        } else {
+            service.truncateUser(req, resp);
+        }
     }
 }

@@ -27,5 +27,5 @@ EC2. Demonstration will perform CRUD operations through Postman and present pers
 - [x] Git SCM (on GitHub)
 - [x] Tomcat 9.0.52
 - [ ] Jacoco
-- [ ] Postman
+- [x] Postman
 - [ ] AWS EC2

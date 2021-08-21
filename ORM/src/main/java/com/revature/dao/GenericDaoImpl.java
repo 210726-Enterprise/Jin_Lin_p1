@@ -1,6 +1,8 @@
 package com.revature.dao;
 
 import com.revature.util.ConnectionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -10,6 +12,7 @@ import java.sql.*;
 import java.util.*;
 
 public class GenericDaoImpl implements GenericDAO{
+    private static final Logger logger = LoggerFactory.getLogger(ConnectionFactory.class);
 //    @Override
 //    public boolean create(Class<?> clazz) {
 //        int success = 0;
@@ -32,7 +35,7 @@ public class GenericDaoImpl implements GenericDAO{
 //    }
 
     @Override
-    public void truncate(Class<?> clazz) {
+    public boolean truncate(Class<?> clazz) {
         // SQL statement
         String sql = "TRUNCATE TABLE \"" + clazz.getSimpleName() + "\" CASCADE;";
 
@@ -43,12 +46,13 @@ public class GenericDaoImpl implements GenericDAO{
             PreparedStatement ps = connection.prepareStatement(sql);
 
             // Execute query
-            ps.execute();
+            return ps.execute();
 
             // catch SQLException
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn(String.valueOf(e));
         }
+        return false;
     }
 
     @Override
@@ -123,7 +127,7 @@ public class GenericDaoImpl implements GenericDAO{
             return ps.executeUpdate();
 
         } catch (SQLException | InvocationTargetException | IllegalAccessException e) {
-            e.printStackTrace();
+            logger.warn(String.valueOf(e));
         }
         return 0;
     }
@@ -151,8 +155,7 @@ public class GenericDaoImpl implements GenericDAO{
 
             // catch SQLException
         } catch (SQLException e) {
-            e.printStackTrace();
-//            logger.warn(e.getMessage(), e);
+            logger.warn(String.valueOf(e));
         }
         return success == 1;
 
@@ -212,8 +215,7 @@ public class GenericDaoImpl implements GenericDAO{
             success = stmt.executeUpdate();
 
         } catch (SQLException | InvocationTargetException | IllegalAccessException e) {
-            e.printStackTrace();
-//            logger.warn(e.getMessage(), e);
+            logger.warn(String.valueOf(e));
         }
 
         return success == 1;
@@ -265,7 +267,7 @@ public class GenericDaoImpl implements GenericDAO{
             }
         // Catch Exceptions
         } catch (SQLException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
+            logger.warn(String.valueOf(e));
         }
         // return the list of objects
         return Optional.of(list);
@@ -311,7 +313,7 @@ public class GenericDaoImpl implements GenericDAO{
             }
 
         } catch (SQLException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+            logger.warn(String.valueOf(e));
         }
 
         return Optional.empty();

@@ -1,5 +1,9 @@
 package com.revature.util;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,7 +14,7 @@ import java.sql.SQLException;
 public class ConnectionFactory {
     // "jdbc:postgresql://[ENDPOINT]/[DATABASE]"
 
-
+    private static final Logger logger = LoggerFactory.getLogger(ConnectionFactory.class);
     // Connection Object
     private static Connection connection;
 
@@ -30,8 +34,10 @@ public class ConnectionFactory {
 
             // Initiate connection
             connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+            logger.info("Database connection established...");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+            logger.error("Failed to establish a connection to Database...");
         }
         // return connection object
         return connection;
