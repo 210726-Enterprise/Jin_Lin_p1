@@ -4,6 +4,8 @@ package com.revature.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.sql.DataSource;
+import javax.xml.crypto.Data;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -20,6 +22,7 @@ public class ConnectionFactory {
     private static final Logger logger = LoggerFactory.getLogger(ConnectionFactory.class);
     // Connection Object
     private static Connection connection;
+
 
     /**
      * Get a connection with database

@@ -43,7 +43,7 @@ public class GenericDaoImplTest {
 
     @Test
     public void selectUserByIdTest() {
-        Assertions.assertTrue(dao.select(User.class, 66).isPresent());
+        Assertions.assertTrue(dao.select(User.class, 111).isPresent());
     }
 
     @Test

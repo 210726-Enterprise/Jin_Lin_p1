@@ -14,3 +14,15 @@ INFO : 2021-08-21 21:41:52 : Database connection established...
 INFO : 2021-08-21 21:41:52 : Successfully retrieved all users!
 INFO : 2021-08-21 21:42:15 : Database connection established...
 INFO : 2021-08-21 21:42:15 : Successfully update an User: 100
+INFO : 2021-08-21 22:16:18 : Database connection established...
+INFO : 2021-08-21 22:16:18 : Successfully retrieved all users!
+INFO : 2021-08-21 22:16:26 : Successfully insert an User: 0
+INFO : 2021-08-21 22:16:46 : Successfully insert an User: 0
+INFO : 2021-08-21 22:17:14 : Successfully truncated the User table!
+INFO : 2021-08-21 22:17:22 : Successfully retrieved all users!
+INFO : 2021-08-21 22:17:30 : Successfully insert an User: 0
+INFO : 2021-08-21 22:17:31 : Successfully insert an User: 0
+INFO : 2021-08-21 22:17:32 : Successfully insert an User: 0
+INFO : 2021-08-21 22:17:33 : Successfully insert an User: 0
+INFO : 2021-08-21 22:17:49 : Database connection established...
+INFO : 2021-08-21 22:17:49 : Successfully retrieved all accounts!
