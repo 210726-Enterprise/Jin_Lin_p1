@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="11" failures="0" name="com.revature.dao.GenericDaoImplTest" time="7.979" errors="0" skipped="0">
+<testsuite tests="11" failures="0" name="com.revature.dao.GenericDaoImplTest" time="5.567" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2021.1.3"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
@@ -64,15 +64,15 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.revature.dao.GenericDaoImplTest" name="create" time="0.037"/>
-  <testcase classname="com.revature.dao.GenericDaoImplTest" name="selectAllAccountTest" time="1.286"/>
-  <testcase classname="com.revature.dao.GenericDaoImplTest" name="insertAccountTest" time="1.181"/>
-  <testcase classname="com.revature.dao.GenericDaoImplTest" name="deleteUserByIdTest" time="0.8"/>
-  <testcase classname="com.revature.dao.GenericDaoImplTest" name="updateAccountTest" time="0.783"/>
-  <testcase classname="com.revature.dao.GenericDaoImplTest" name="selectAccountByIdTest" time="0.383"/>
-  <testcase classname="com.revature.dao.GenericDaoImplTest" name="updateUserTest" time="0.778"/>
-  <testcase classname="com.revature.dao.GenericDaoImplTest" name="insertUserTest" time="1.169"/>
-  <testcase classname="com.revature.dao.GenericDaoImplTest" name="selectUserByIdTest" time="0.391"/>
-  <testcase classname="com.revature.dao.GenericDaoImplTest" name="selectAllUserTest" time="0.398"/>
-  <testcase classname="com.revature.dao.GenericDaoImplTest" name="deleteAccountByIdTest" time="0.773"/>
+  <testcase classname="com.revature.dao.GenericDaoImplTest" name="create" time="1.253"/>
+  <testcase classname="com.revature.dao.GenericDaoImplTest" name="selectAllAccountTest" time="0.427"/>
+  <testcase classname="com.revature.dao.GenericDaoImplTest" name="insertAccountTest" time="0.487"/>
+  <testcase classname="com.revature.dao.GenericDaoImplTest" name="deleteUserByIdTest" time="0.444"/>
+  <testcase classname="com.revature.dao.GenericDaoImplTest" name="updateAccountTest" time="0.445"/>
+  <testcase classname="com.revature.dao.GenericDaoImplTest" name="selectAccountByIdTest" time="0.396"/>
+  <testcase classname="com.revature.dao.GenericDaoImplTest" name="updateUserTest" time="0.435"/>
+  <testcase classname="com.revature.dao.GenericDaoImplTest" name="insertUserTest" time="0.482"/>
+  <testcase classname="com.revature.dao.GenericDaoImplTest" name="selectUserByIdTest" time="0.382"/>
+  <testcase classname="com.revature.dao.GenericDaoImplTest" name="selectAllUserTest" time="0.391"/>
+  <testcase classname="com.revature.dao.GenericDaoImplTest" name="deleteAccountByIdTest" time="0.425"/>
 </testsuite>

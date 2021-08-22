@@ -12,6 +12,8 @@ import java.sql.*;
 import java.util.*;
 
 public class GenericDaoImpl implements GenericDAO{
+    Connection connection = ConnectionFactory.getConnection();
+
     private static final Logger logger = LoggerFactory.getLogger(ConnectionFactory.class);
 //    @Override
 //    public boolean create(Class<?> clazz) {
@@ -40,14 +42,15 @@ public class GenericDaoImpl implements GenericDAO{
         String sql = "TRUNCATE TABLE \"" + clazz.getSimpleName() + "\" CASCADE;";
 
         // try/resource block that close the connection automatically
-        try(Connection connection = ConnectionFactory.getConnection()) {
+        try {
 
             // PreparedStatement to avoid SQL Injection
             PreparedStatement ps = connection.prepareStatement(sql);
 
             // Execute query
-            return ps.execute();
-
+            boolean result = ps.execute();
+            ps.close();
+            return result;
             // catch SQLException
         } catch (SQLException e) {
             logger.warn(String.valueOf(e));
@@ -68,10 +71,10 @@ public class GenericDaoImpl implements GenericDAO{
         ArrayList<Method> methodsToInvoke = new ArrayList<>();
 
         // Map each getter methods to its corresponding field
-        for(int x = 0; x < fields.length; x++) {
-            for(int y = 0; y < getters.length; y++) {
-                if(getters[y].getName().toLowerCase().contains(fields[x].getName().toLowerCase())) {
-                    map.put(fields[x].getName(), getters[y]);
+        for (Field field : fields) {
+            for (Method getter : getters) {
+                if (getter.getName().toLowerCase().contains(field.getName().toLowerCase())) {
+                    map.put(field.getName(), getter);
                 }
             }
         }
@@ -80,7 +83,7 @@ public class GenericDaoImpl implements GenericDAO{
             methodsToInvoke.add(map.get(f.getName()));
         }
 
-        try(Connection connection = ConnectionFactory.getConnection()) {
+        try {
             /*
              * Build SQL Statement using StringBuilder without a primary key in the parameters
              */
@@ -109,8 +112,8 @@ public class GenericDaoImpl implements GenericDAO{
                 /*
                  * Build SQL Statement using StringBuilder with a primary key in the parameters
                  */
-                for(int x = 0; x < fields.length; x++) {
-                    builder.append(fields[x].getName()).append((", "));
+                for (Field field : fields) {
+                    builder.append(field.getName()).append((", "));
                 }
                 builder.delete(builder.length() - 2, builder.length());
                 builder.append(") VALUES(");
@@ -124,7 +127,9 @@ public class GenericDaoImpl implements GenericDAO{
                 String sql = builder.toString();
                 ps = connection.prepareStatement(sql);
             }
-            return ps.executeUpdate();
+            int result = ps.executeUpdate();
+            ps.close();
+            return result;
 
         } catch (SQLException | InvocationTargetException | IllegalAccessException e) {
             logger.warn(String.valueOf(e));
@@ -142,7 +147,7 @@ public class GenericDaoImpl implements GenericDAO{
         Field[] fields = clazz.getDeclaredFields();
 
         // try/resource block that close the connection automatically
-        try(Connection connection = ConnectionFactory.getConnection()) {
+        try {
             assert connection != null;
             // SQL Statement
             String sql = "DELETE FROM \"" + clazz.getSimpleName() +
@@ -152,6 +157,7 @@ public class GenericDaoImpl implements GenericDAO{
 
             // Execute query
             success = ps.executeUpdate();
+            ps.close();
 
             // catch SQLException
         } catch (SQLException e) {
@@ -174,10 +180,10 @@ public class GenericDaoImpl implements GenericDAO{
         ArrayList<Method> methodsToInvoke = new ArrayList<>();
 
         // Map each getter methods to its corresponding field
-        for(int x = 0; x < fields.length; x++) {
-            for(int y = 0; y < getters.length; y++) {
-                if(getters[y].getName().toLowerCase().contains(fields[x].getName().toLowerCase())) {
-                    map.put(fields[x].getName(), getters[y]);
+        for (Field field : fields) {
+            for (Method getter : getters) {
+                if (getter.getName().toLowerCase().contains(field.getName().toLowerCase())) {
+                    map.put(field.getName(), getter);
                 }
             }
         }
@@ -186,8 +192,7 @@ public class GenericDaoImpl implements GenericDAO{
             methodsToInvoke.add(map.get(f.getName()));
         }
 
-
-        try(Connection conn = ConnectionFactory.getConnection()){
+        try{
             StringBuilder builder = new StringBuilder();
             builder.append("UPDATE \"")
                     .append(clazz.getSimpleName())
@@ -209,10 +214,11 @@ public class GenericDaoImpl implements GenericDAO{
                     .append(";");
 
             String sql = builder.toString();
-            assert conn != null;
-            PreparedStatement stmt = conn.prepareStatement(sql);
+            assert connection != null;
+            PreparedStatement ps = connection.prepareStatement(sql);
 
-            success = stmt.executeUpdate();
+            success = ps.executeUpdate();
+            ps.close();
 
         } catch (SQLException | InvocationTargetException | IllegalAccessException e) {
             logger.warn(String.valueOf(e));
@@ -235,7 +241,7 @@ public class GenericDaoImpl implements GenericDAO{
         String sql = "SELECT * FROM \"" + clazz.getSimpleName() + "\";";
 
         // try/resource block that close the connection automatically
-        try(Connection connection = ConnectionFactory.getConnection()) {
+        try {
 
             // Use Statement since will be executing a static query
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -244,7 +250,7 @@ public class GenericDaoImpl implements GenericDAO{
             ResultSet rs = ps.executeQuery();
 
             // List of parameters for constructor
-            ArrayList<Object> parameters = new ArrayList();
+            ArrayList<Object> parameters = new ArrayList<>();
 
             // Get the values for every record in the database
             while(rs.next()) {
@@ -265,6 +271,8 @@ public class GenericDaoImpl implements GenericDAO{
                 // Clear the parameter list to taking the next record
                 parameters.clear();
             }
+            ps.close();
+            rs.close();
         // Catch Exceptions
         } catch (SQLException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             logger.warn(String.valueOf(e));
@@ -280,23 +288,22 @@ public class GenericDaoImpl implements GenericDAO{
         //Get all Constructors of clazz
         Constructor<?>[] constructors = clazz.getDeclaredConstructors();
 
-        try(Connection connection = ConnectionFactory.getConnection()) {
+        try {
             // Build SQL Statement
-            StringBuilder builder = new StringBuilder();
-            builder.append("SELECT * FROM \"")
-                    .append(clazz.getSimpleName())
-                    .append("\" WHERE ")
-                    .append(fields[0].getName())
-                    .append(" = ")
-                    .append(primaryKey)
-                    .append(";");
             assert connection != null;
 
-            PreparedStatement ps = connection.prepareStatement(builder.toString());
+            String sql = "SELECT * FROM \"" +
+                    clazz.getSimpleName() +
+                    "\" WHERE " +
+                    fields[0].getName() +
+                    " = " +
+                    primaryKey +
+                    ";";
+            PreparedStatement ps = connection.prepareStatement(sql);
 
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
-                ArrayList<Object> parameters = new ArrayList();
+                ArrayList<Object> parameters = new ArrayList<>();
                 int column = 1;
                 // Get the column value for every column in the database
                 while (column != fields.length + 1) {
@@ -311,6 +318,8 @@ public class GenericDaoImpl implements GenericDAO{
                         .newInstance(parameters);
                 return Optional.of(object);
             }
+            ps.close();
+            rs.close();
 
         } catch (SQLException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
             logger.warn(String.valueOf(e));
