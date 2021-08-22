@@ -63,7 +63,6 @@ public class UserService {
         try {
             StringBuilder builder = new StringBuilder();
             req.getReader().lines().collect(Collectors.toList()).forEach(builder::append);
-
             User u = mapper.readValue(builder.toString(), User.class);
             int result = insert(u);
             if(result != 0) {
