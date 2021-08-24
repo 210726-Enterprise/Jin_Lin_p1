@@ -1,0 +1,8 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+WebApp-JL,com.revature.models,User,84,0,0,0,22,0,10,0,10,0
+WebApp-JL,com.revature.models,Account,121,0,0,0,28,0,12,0,12,0
+WebApp-JL,com.revature,Driver,72,0,0,0,13,0,3,0,3,0
+WebApp-JL,com.revature.servlet,AccountServlet,52,0,4,0,15,0,7,0,5,0
+WebApp-JL,com.revature.servlet,UserServlet,52,0,4,0,15,0,7,0,5,0
+WebApp-JL,com.revature.service,UserService,362,0,14,0,92,0,19,0,12,0
+WebApp-JL,com.revature.service,AccountService,316,0,14,0,80,0,20,0,13,0

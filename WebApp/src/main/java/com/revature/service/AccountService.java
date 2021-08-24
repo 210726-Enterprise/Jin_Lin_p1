@@ -23,13 +23,14 @@ public class AccountService {
     private GenericDAO dao;
     private ObjectMapper mapper;
 
-    public AccountService() {
-        dao = new GenericDaoImpl();
-        mapper = new ObjectMapper();
+    public AccountService(GenericDAO dao, ObjectMapper objectMapper) {
+        this.dao = dao;
+        this.mapper = objectMapper;
     }
 
     public void truncateAccount(HttpServletRequest req, HttpServletResponse resp) {
         dao.truncate(Account.class);
+        resp.setStatus(HttpServletResponse.SC_OK);
         logger.info("Successfully truncated the Account table!");
     }
 
@@ -55,6 +56,7 @@ public class AccountService {
         try {
             String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(getAccounts());
             resp.getOutputStream().print(json);
+            resp.setStatus(HttpServletResponse.SC_OK);
             logger.info("Successfully retrieved all accounts!");
 
         } catch (IOException e) {
@@ -94,7 +96,7 @@ public class AccountService {
                 resp.setStatus(HttpServletResponse.SC_ACCEPTED);
                 logger.info("Successfully updated an account: " + a.getAccountId());
             } else {
-                resp.setStatus(HttpServletResponse.SC_CONFLICT);
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 logger.warn("Failed to update!");
             }
         } catch (Exception e) {
@@ -110,7 +112,7 @@ public class AccountService {
             resp.setStatus(HttpServletResponse.SC_OK);
             logger.info("Successfully deleted an account: " + id);
         } else {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             logger.warn("Failed to delete!");
         }
     }
