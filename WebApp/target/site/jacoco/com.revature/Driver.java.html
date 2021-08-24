@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Driver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">WebApp-JL</a> &gt; <a href="index.source.html" class="el_package">com.revature</a> &gt; <span class="el_source">Driver.java</span></div><h1>Driver.java</h1><pre class="source lang-java linenums">package com.revature;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.dao.GenericDaoImpl;
+import com.revature.service.AccountService;
+import com.revature.service.UserService;
+import com.revature.servlet.AccountServlet;
+import com.revature.servlet.UserServlet;
+import com.revature.util.ConnectionFactory;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
+
+@WebListener
+<span class="nc" id="L17">public class Driver implements ServletContextListener {</span>
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+<span class="nc" id="L20">        GenericDaoImpl dao = new GenericDaoImpl();</span>
+
+<span class="nc" id="L22">        ConnectionFactory cf = new ConnectionFactory(&quot;jdbc:postgresql:&quot; +</span>
+                &quot;//database-1.cz4piyzhcf32.us-east-2.rds.amazonaws.com/postgres?currentSchema=mockdb&quot;,
+                &quot;jinlin&quot;, &quot;jinlin226&quot;);
+
+<span class="nc" id="L26">        dao.setConnection(cf.getConnection());</span>
+
+<span class="nc" id="L28">        ObjectMapper mapper = new ObjectMapper();</span>
+
+<span class="nc" id="L30">        UserService userService = new UserService(dao, mapper);</span>
+<span class="nc" id="L31">        AccountService accountService = new AccountService(dao, mapper);</span>
+
+<span class="nc" id="L33">        ServletContext context = sce.getServletContext();</span>
+<span class="nc" id="L34">        context.addServlet(&quot;userServlet&quot;, new UserServlet(userService)).addMapping(&quot;/users&quot;);</span>
+<span class="nc" id="L35">        context.addServlet(&quot;accountServlet&quot;, new AccountServlet(accountService)).addMapping(&quot;/accounts&quot;);</span>
+<span class="nc" id="L36">    }</span>
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+<span class="nc" id="L40">        ServletContextListener.super.contextDestroyed(sce);</span>
+<span class="nc" id="L41">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

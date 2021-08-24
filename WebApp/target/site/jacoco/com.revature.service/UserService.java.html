@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">WebApp-JL</a> &gt; <a href="index.source.html" class="el_package">com.revature.service</a> &gt; <span class="el_source">UserService.java</span></div><h1>UserService.java</h1><pre class="source lang-java linenums">package com.revature.service;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.dao.GenericDAO;
+import com.revature.models.User;
+import org.apache.log4j.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+public class UserService {
+<span class="nc" id="L17">    private Logger logger = Logger.getLogger(UserService.class);;</span>
+
+    private GenericDAO dao;
+    private ObjectMapper mapper;
+
+<span class="nc" id="L22">    public UserService(GenericDAO dao, ObjectMapper objectMapper) {</span>
+<span class="nc" id="L23">        this.dao = dao;</span>
+<span class="nc" id="L24">        this.mapper = objectMapper;</span>
+
+<span class="nc" id="L26">        PatternLayout layout = new PatternLayout(&quot;%p : %d{yyyy-MM-dd HH:mm:ss} : %m%n&quot;);</span>
+
+<span class="nc" id="L28">        ConsoleAppender consoleAppender = new ConsoleAppender();</span>
+<span class="nc" id="L29">        consoleAppender.setThreshold(Level.ALL);</span>
+<span class="nc" id="L30">        consoleAppender.setLayout(layout);</span>
+<span class="nc" id="L31">        consoleAppender.activateOptions();</span>
+
+<span class="nc" id="L33">        Logger.getRootLogger().addAppender(consoleAppender);</span>
+
+<span class="nc" id="L35">        FileAppender fileAppender = new FileAppender();</span>
+<span class="nc" id="L36">        fileAppender.setThreshold(Level.ALL);</span>
+<span class="nc" id="L37">        fileAppender.setLayout(layout);</span>
+<span class="nc" id="L38">        fileAppender.setFile(&quot;src/main/logs/log.txt&quot;);</span>
+<span class="nc" id="L39">        fileAppender.activateOptions();</span>
+
+<span class="nc" id="L41">        Logger.getRootLogger().addAppender(fileAppender);</span>
+<span class="nc" id="L42">    }</span>
+
+    public void getUser(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+<span class="nc" id="L46">            User u = getUserById(Integer.parseInt(req.getParameter(&quot;userId&quot;)));</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">            if(u != null) {</span>
+<span class="nc" id="L48">                String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(u);</span>
+<span class="nc" id="L49">                resp.getOutputStream().print(json);</span>
+<span class="nc" id="L50">                resp.setStatus(HttpServletResponse.SC_OK);</span>
+<span class="nc" id="L51">                logger.info(&quot;Successfully retrieved an User!&quot;);</span>
+<span class="nc" id="L52">            } else {</span>
+<span class="nc" id="L53">                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);</span>
+<span class="nc" id="L54">                logger.warn(&quot;User Not Found!&quot;);</span>
+            }
+
+<span class="nc" id="L57">        } catch (IOException e) {</span>
+<span class="nc" id="L58">            logger.warn(e.getMessage(), e);</span>
+<span class="nc" id="L59">        }</span>
+<span class="nc" id="L60">    }</span>
+
+    public void truncateUser(HttpServletRequest req, HttpServletResponse resp) {
+<span class="nc" id="L63">        dao.truncate(User.class);</span>
+<span class="nc" id="L64">        resp.setStatus(HttpServletResponse.SC_OK);</span>
+<span class="nc" id="L65">        logger.info(&quot;Successfully truncated the User table!&quot;);</span>
+<span class="nc" id="L66">    }</span>
+
+    public void getAllUsers(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+<span class="nc" id="L70">            String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(getUsers());</span>
+<span class="nc" id="L71">            resp.getOutputStream().print(json);</span>
+<span class="nc" id="L72">            resp.setStatus(HttpServletResponse.SC_OK);</span>
+<span class="nc" id="L73">            logger.info(&quot;Successfully retrieved all users!&quot;);</span>
+
+<span class="nc" id="L75">        } catch (IOException e) {</span>
+<span class="nc" id="L76">            logger.warn(e.getMessage(), e);</span>
+<span class="nc" id="L77">        }</span>
+<span class="nc" id="L78">    }</span>
+
+    public void insertUser(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+<span class="nc" id="L82">            StringBuilder builder = new StringBuilder();</span>
+<span class="nc" id="L83">            req.getReader().lines().collect(Collectors.toList()).forEach(builder::append);</span>
+<span class="nc" id="L84">            User u = mapper.readValue(builder.toString(), User.class);</span>
+<span class="nc" id="L85">            int result = insert(u);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            if(result != 0) {</span>
+<span class="nc" id="L87">                resp.setStatus(HttpServletResponse.SC_CREATED);</span>
+<span class="nc" id="L88">                logger.info(&quot;Successfully insert an User: &quot; + u.getUserId());</span>
+            } else {
+<span class="nc" id="L90">                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);</span>
+<span class="nc" id="L91">                logger.warn(&quot;Failed to insert!&quot;);</span>
+            }
+
+<span class="nc" id="L94">        } catch (Exception e) {</span>
+<span class="nc" id="L95">            logger.warn(e.getMessage());</span>
+<span class="nc" id="L96">        }</span>
+<span class="nc" id="L97">    }</span>
+
+    public void updateUser(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+<span class="nc" id="L101">            StringBuilder builder = new StringBuilder();</span>
+<span class="nc" id="L102">            req.getReader().lines().collect(Collectors.toList()).forEach(builder::append);</span>
+
+<span class="nc" id="L104">            User u = mapper.readValue(builder.toString(), User.class);</span>
+<span class="nc" id="L105">            boolean result = update(u);</span>
+
+<span class="nc bnc" id="L107" title="All 2 branches missed.">            if (result) {</span>
+<span class="nc" id="L108">                resp.setStatus(HttpServletResponse.SC_OK);</span>
+<span class="nc" id="L109">                logger.info(&quot;Successfully update an User: &quot; + u.getUserId());</span>
+            } else {
+<span class="nc" id="L111">                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);</span>
+<span class="nc" id="L112">                logger.warn(&quot;Failed to update!&quot;);</span>
+            }
+<span class="nc" id="L114">        } catch (Exception e) {</span>
+<span class="nc" id="L115">            logger.warn(e.getMessage());</span>
+<span class="nc" id="L116">        }</span>
+<span class="nc" id="L117">    }</span>
+
+    public void deleteUser(HttpServletRequest req, HttpServletResponse resp) {
+<span class="nc" id="L120">        int toDelete = Integer.parseInt(req.getParameter(&quot;userId&quot;));</span>
+<span class="nc" id="L121">        boolean result = delete(toDelete);</span>
+
+<span class="nc bnc" id="L123" title="All 2 branches missed.">        if(result) {</span>
+<span class="nc" id="L124">            resp.setStatus(HttpServletResponse.SC_OK);</span>
+<span class="nc" id="L125">            logger.info(&quot;Successfully delete an User: &quot; + toDelete);</span>
+        } else {
+<span class="nc" id="L127">            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);</span>
+<span class="nc" id="L128">            logger.warn(&quot;Failed to delete!&quot;);</span>
+        }
+<span class="nc" id="L130">    }</span>
+
+    private boolean delete(int id) {
+<span class="nc" id="L133">        return dao.delete(User.class, id);</span>
+    }
+
+    private boolean update(User u) {
+<span class="nc" id="L137">        return dao.update(User.class, u);</span>
+    }
+
+    private int insert(User u) {
+<span class="nc" id="L141">        return dao.insert(User.class, u);</span>
+    }
+
+    private List&lt;User&gt; getUsers() {
+<span class="nc" id="L145">        Optional&lt;List&lt;Object&gt;&gt; daoResult = dao.selectAll(User.class);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        if(daoResult.isPresent()) {</span>
+<span class="nc" id="L147">            ArrayList&lt;User&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">            for(Object obj : daoResult.get()) {</span>
+<span class="nc" id="L149">                result.add((User) obj);</span>
+<span class="nc" id="L150">            }</span>
+<span class="nc" id="L151">            return result;</span>
+        }
+<span class="nc" id="L153">        return new ArrayList&lt;&gt;();</span>
+    }
+
+    private User getUserById(int id) {
+<span class="nc" id="L157">        Optional&lt;Object&gt; daoResult = dao.select(User.class, id);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">        if (daoResult.isPresent()) {</span>
+<span class="nc" id="L159">            User u = (User) daoResult.get();</span>
+<span class="nc" id="L160">            return u;</span>
+        }
+<span class="nc" id="L162">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

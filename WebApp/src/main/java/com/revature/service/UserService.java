@@ -1,12 +1,9 @@
 package com.revature.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.revature.dao.GenericDAO;
-import com.revature.dao.GenericDaoImpl;
 import com.revature.models.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,21 +14,40 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class UserService {
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private Logger logger = Logger.getLogger(UserService.class);;
 
     private GenericDAO dao;
     private ObjectMapper mapper;
 
-    public UserService() {
-        dao = new GenericDaoImpl();
-        mapper = new ObjectMapper();
+    public UserService(GenericDAO dao, ObjectMapper objectMapper) {
+        this.dao = dao;
+        this.mapper = objectMapper;
+
+        PatternLayout layout = new PatternLayout("%p : %d{yyyy-MM-dd HH:mm:ss} : %m%n");
+
+        ConsoleAppender consoleAppender = new ConsoleAppender();
+        consoleAppender.setThreshold(Level.ALL);
+        consoleAppender.setLayout(layout);
+        consoleAppender.activateOptions();
+
+        Logger.getRootLogger().addAppender(consoleAppender);
+
+        FileAppender fileAppender = new FileAppender();
+        fileAppender.setThreshold(Level.ALL);
+        fileAppender.setLayout(layout);
+        fileAppender.setFile("src/main/logs/log.txt");
+        fileAppender.activateOptions();
+
+        Logger.getRootLogger().addAppender(fileAppender);
     }
+
     public void getUser(HttpServletRequest req, HttpServletResponse resp) {
         try {
             User u = getUserById(Integer.parseInt(req.getParameter("userId")));
             if(u != null) {
                 String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(u);
                 resp.getOutputStream().print(json);
+                resp.setStatus(HttpServletResponse.SC_OK);
                 logger.info("Successfully retrieved an User!");
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -45,6 +61,7 @@ public class UserService {
 
     public void truncateUser(HttpServletRequest req, HttpServletResponse resp) {
         dao.truncate(User.class);
+        resp.setStatus(HttpServletResponse.SC_OK);
         logger.info("Successfully truncated the User table!");
     }
 
@@ -52,6 +69,7 @@ public class UserService {
         try {
             String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(getUsers());
             resp.getOutputStream().print(json);
+            resp.setStatus(HttpServletResponse.SC_OK);
             logger.info("Successfully retrieved all users!");
 
         } catch (IOException e) {
@@ -87,10 +105,10 @@ public class UserService {
             boolean result = update(u);
 
             if (result) {
-                resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+                resp.setStatus(HttpServletResponse.SC_OK);
                 logger.info("Successfully update an User: " + u.getUserId());
             } else {
-                resp.setStatus(HttpServletResponse.SC_CONFLICT);
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 logger.warn("Failed to update!");
             }
         } catch (Exception e) {
@@ -106,7 +124,7 @@ public class UserService {
             resp.setStatus(HttpServletResponse.SC_OK);
             logger.info("Successfully delete an User: " + toDelete);
         } else {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             logger.warn("Failed to delete!");
         }
     }

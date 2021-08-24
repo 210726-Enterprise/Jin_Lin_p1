@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Account.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">WebApp-JL</a> &gt; <a href="index.source.html" class="el_package">com.revature.models</a> &gt; <span class="el_source">Account.java</span></div><h1>Account.java</h1><pre class="source lang-java linenums">package com.revature.models;
+
+import java.util.List;
+
+/**
+ * Account Model
+ */
+public class Account{
+    // States of an Account object
+    private int accountId;
+    private String accountType;
+    private String username;
+    private String password;
+    private double balance;
+
+<span class="nc" id="L16">    public Account() {</span>
+
+<span class="nc" id="L18">    }</span>
+
+<span class="nc" id="L20">    public Account(List&lt;Object&gt; obj) {</span>
+<span class="nc" id="L21">        this.accountId = (int) obj.get(0);</span>
+<span class="nc" id="L22">        this.accountType = (String) obj.get(1);</span>
+<span class="nc" id="L23">        this.username = (String) obj.get(2);</span>
+<span class="nc" id="L24">        this.password = (String) obj.get(3);</span>
+<span class="nc" id="L25">        this.balance = (double) obj.get(4);</span>
+<span class="nc" id="L26">    }</span>
+
+    /**
+     * Constructor
+     * @param accountId unique primary key
+     * @param accountType account type ('Saving', 'Checking')
+     * @param username username for login
+     * @param password password for login
+     * @param balance amount in the account
+     */
+<span class="nc" id="L36">    public Account(int accountId, String accountType, String username, String password, double balance) {</span>
+<span class="nc" id="L37">        this.accountId = accountId;</span>
+<span class="nc" id="L38">        this.accountType = accountType;</span>
+<span class="nc" id="L39">        this.username = username;</span>
+<span class="nc" id="L40">        this.password = password;</span>
+<span class="nc" id="L41">        this.balance = balance;</span>
+<span class="nc" id="L42">    }</span>
+
+    /**
+     * Getter for Account ID
+     * @return integer value of Account ID
+     */
+    public int getAccountId() {
+<span class="nc" id="L49">        return accountId;</span>
+    }
+
+    /**
+     * Getter for Account Type
+     * @return String value of Account Type
+     */
+    public String getAccountType() {
+<span class="nc" id="L57">        return accountType;</span>
+    }
+
+    /**
+     * Getter for username
+     * @return String value of username
+     */
+    public String getUsername() {
+<span class="nc" id="L65">        return username;</span>
+    }
+
+    /**
+     * Setter for username
+     * @param username new username
+     */
+    public void setUsername(String username) {
+<span class="nc" id="L73">        this.username = username;</span>
+<span class="nc" id="L74">    }</span>
+
+    /**
+     * Getter for password
+     * @return String value of password
+     */
+    public String getPassword() {
+<span class="nc" id="L81">        return password;</span>
+    }
+
+    /**
+     * Setter for password
+     * @param password new password
+     */
+    public void setPassword(String password) {
+<span class="nc" id="L89">        this.password = password;</span>
+<span class="nc" id="L90">    }</span>
+
+    /**
+     * Getter for balance
+     * @return double value of balance
+     */
+    public double getBalance() {
+<span class="nc" id="L97">        return balance;</span>
+    }
+
+    /**
+     * Setter for balance
+     * @param balance new balance
+     */
+    public void setBalance(double balance) {
+<span class="nc" id="L105">        this.balance = balance;</span>
+<span class="nc" id="L106">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L110">        return &quot;Account{&quot; +</span>
+                &quot;accountId=&quot; + accountId +
+                &quot;, accountType='&quot; + accountType + '\'' +
+                &quot;, username='&quot; + username + '\'' +
+                &quot;, password='&quot; + password + '\'' +
+                &quot;, balance=&quot; + balance +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

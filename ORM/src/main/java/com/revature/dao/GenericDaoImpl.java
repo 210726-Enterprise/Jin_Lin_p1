@@ -12,7 +12,7 @@ import java.sql.*;
 import java.util.*;
 
 public class GenericDaoImpl implements GenericDAO{
-    Connection connection = ConnectionFactory.getConnection();
+    Connection connection;
 
     private static final Logger logger = LoggerFactory.getLogger(ConnectionFactory.class);
 //    @Override
@@ -35,6 +35,11 @@ public class GenericDaoImpl implements GenericDAO{
 //        return success == 1;
 //
 //    }
+
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 
     @Override
     public boolean truncate(Class<?> clazz) {

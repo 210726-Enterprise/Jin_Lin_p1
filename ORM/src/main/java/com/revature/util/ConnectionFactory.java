@@ -1,50 +1,59 @@
 package com.revature.util;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
 
-import javax.sql.DataSource;
-import javax.xml.crypto.Data;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 
 /**
  * ConnectionFactory class that generate a connection to PostgreSQL database
  */
 public class ConnectionFactory {
-    // "jdbc:postgresql://[ENDPOINT]/[DATABASE]"
-
-    private static final Logger logger = LoggerFactory.getLogger(ConnectionFactory.class);
+    private static final Logger logger = Logger.getLogger(ConnectionFactory.class);
     // Connection Object
     private static Connection connection;
+
+    private static String URL;
+    private static String USERNAME;
+    private static String PASSWORD;
+
+
+    public ConnectionFactory(String url, String username, String password) {
+        URL = url;
+        USERNAME = username;
+        PASSWORD = password;
+
+        PatternLayout layout = new PatternLayout("%p : %d{yyyy-MM-dd HH:mm:ss} : %m%n");
+        FileAppender fileAppender = new FileAppender();
+
+        fileAppender.setThreshold(Level.INFO);
+        fileAppender.setLayout(layout);
+        fileAppender.setFile("src/main/logs/log.txt");
+        fileAppender.activateOptions();
+
+        Logger.getRootLogger().addAppender(fileAppender);
+    }
 
 
     /**
      * Get a connection with database
      * @return returns a connection object
      */
-    public static Connection getConnection() {
+    public Connection getConnection() {
 
         // Wrap around in try/catch block to cat SQLException
         try {
             Class.forName("org.postgresql.Driver");
 
-            FileInputStream fis = new FileInputStream("C:\\Users\\jtlin\\Desktop\\Project1\\WebApp\\src\\main\\resources\\application.properties");
-            Properties p = new Properties();
-            p.load(fis);
-            String URL = (String) p.get("URL");
-            String USERNAME = (String) p.get("USERNAME");
-            String PASSWORD = (String) p.get("PASSWORD");
-
             // Initiate connection
             connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
             logger.info("Database connection established...");
-        } catch (SQLException | ClassNotFoundException | IOException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             logger.error("Failed to establish a connection to Database...");
         }
