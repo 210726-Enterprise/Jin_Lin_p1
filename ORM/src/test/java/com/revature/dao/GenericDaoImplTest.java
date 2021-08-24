@@ -6,8 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-
-import java.sql.Connection;
 import java.util.List;
 
 public class GenericDaoImplTest {

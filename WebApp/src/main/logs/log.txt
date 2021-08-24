@@ -1,0 +1,105 @@
+INFO : 2021-08-24 09:56:30 : Successfully retrieved all users!
+INFO : 2021-08-24 09:56:30 : Successfully truncated the User table!
+INFO : 2021-08-24 09:56:30 : Successfully truncated the User table!
+WARN : 2021-08-24 09:56:30 : Failed to update!
+WARN : 2021-08-24 09:56:30 : Failed to update!
+WARN : 2021-08-24 09:56:30 : Failed to update!
+WARN : 2021-08-24 09:56:30 : Failed to insert!
+WARN : 2021-08-24 09:56:30 : Failed to insert!
+WARN : 2021-08-24 09:56:30 : Failed to insert!
+WARN : 2021-08-24 09:56:30 : Failed to insert!
+WARN : 2021-08-24 09:56:30 : Failed to delete!
+WARN : 2021-08-24 09:56:30 : Failed to delete!
+WARN : 2021-08-24 09:56:30 : Failed to delete!
+WARN : 2021-08-24 09:56:30 : Failed to delete!
+WARN : 2021-08-24 09:56:30 : Failed to delete!
+WARN : 2021-08-24 09:56:30 : User Not Found!
+WARN : 2021-08-24 09:56:30 : User Not Found!
+WARN : 2021-08-24 09:56:30 : User Not Found!
+WARN : 2021-08-24 09:56:30 : User Not Found!
+WARN : 2021-08-24 09:56:30 : User Not Found!
+WARN : 2021-08-24 09:56:30 : User Not Found!
+INFO : 2021-08-24 10:25:13 : Successfully truncated the Account table!
+WARN : 2021-08-24 10:25:14 : Failed to insert!
+WARN : 2021-08-24 10:25:14 : Failed to insert!
+WARN : 2021-08-24 10:25:14 : Failed to update!
+WARN : 2021-08-24 10:25:14 : Failed to update!
+WARN : 2021-08-24 10:25:14 : Failed to update!
+INFO : 2021-08-24 10:25:14 : Successfully retrieved all accounts!
+INFO : 2021-08-24 10:25:14 : Successfully retrieved all accounts!
+INFO : 2021-08-24 10:25:14 : Successfully retrieved all accounts!
+INFO : 2021-08-24 10:25:14 : Successfully retrieved all accounts!
+WARN : 2021-08-24 10:25:14 : Failed to delete!
+WARN : 2021-08-24 10:25:14 : Failed to delete!
+WARN : 2021-08-24 10:25:14 : Failed to delete!
+WARN : 2021-08-24 10:25:14 : Failed to delete!
+WARN : 2021-08-24 10:25:14 : Failed to delete!
+WARN : 2021-08-24 10:25:14 : Account Not Found!
+WARN : 2021-08-24 10:25:14 : Account Not Found!
+WARN : 2021-08-24 10:25:14 : Account Not Found!
+WARN : 2021-08-24 10:25:14 : Account Not Found!
+WARN : 2021-08-24 10:25:14 : Account Not Found!
+WARN : 2021-08-24 10:25:14 : Account Not Found!
+INFO : 2021-08-24 10:25:47 : Successfully retrieved all users!
+INFO : 2021-08-24 10:25:47 : Successfully truncated the User table!
+INFO : 2021-08-24 10:25:47 : Successfully truncated the User table!
+WARN : 2021-08-24 10:25:47 : Failed to update!
+WARN : 2021-08-24 10:25:47 : Failed to update!
+WARN : 2021-08-24 10:25:47 : Failed to update!
+WARN : 2021-08-24 10:25:47 : Failed to insert!
+WARN : 2021-08-24 10:25:47 : Failed to insert!
+WARN : 2021-08-24 10:25:47 : Failed to insert!
+WARN : 2021-08-24 10:25:47 : Failed to insert!
+WARN : 2021-08-24 10:25:47 : Failed to delete!
+WARN : 2021-08-24 10:25:47 : Failed to delete!
+WARN : 2021-08-24 10:25:47 : Failed to delete!
+WARN : 2021-08-24 10:25:47 : Failed to delete!
+WARN : 2021-08-24 10:25:47 : Failed to delete!
+WARN : 2021-08-24 10:25:47 : User Not Found!
+WARN : 2021-08-24 10:25:47 : User Not Found!
+WARN : 2021-08-24 10:25:47 : User Not Found!
+WARN : 2021-08-24 10:25:47 : User Not Found!
+WARN : 2021-08-24 10:25:47 : User Not Found!
+WARN : 2021-08-24 10:25:47 : User Not Found!
+INFO : 2021-08-24 10:26:21 : Successfully retrieved all users!
+INFO : 2021-08-24 10:26:21 : Successfully truncated the User table!
+INFO : 2021-08-24 10:26:21 : Successfully truncated the User table!
+WARN : 2021-08-24 10:26:21 : Failed to update!
+WARN : 2021-08-24 10:26:21 : Failed to update!
+WARN : 2021-08-24 10:26:21 : Failed to update!
+WARN : 2021-08-24 10:26:21 : Failed to insert!
+WARN : 2021-08-24 10:26:21 : Failed to insert!
+WARN : 2021-08-24 10:26:21 : Failed to insert!
+WARN : 2021-08-24 10:26:21 : Failed to insert!
+WARN : 2021-08-24 10:26:21 : Failed to delete!
+WARN : 2021-08-24 10:26:21 : Failed to delete!
+WARN : 2021-08-24 10:26:21 : Failed to delete!
+WARN : 2021-08-24 10:26:21 : Failed to delete!
+WARN : 2021-08-24 10:26:21 : Failed to delete!
+WARN : 2021-08-24 10:26:21 : User Not Found!
+WARN : 2021-08-24 10:26:21 : User Not Found!
+WARN : 2021-08-24 10:26:21 : User Not Found!
+WARN : 2021-08-24 10:26:21 : User Not Found!
+WARN : 2021-08-24 10:26:21 : User Not Found!
+WARN : 2021-08-24 10:26:21 : User Not Found!
+INFO : 2021-08-24 10:27:02 : Successfully truncated the Account table!
+WARN : 2021-08-24 10:27:02 : Failed to insert!
+WARN : 2021-08-24 10:27:02 : Failed to insert!
+WARN : 2021-08-24 10:27:02 : Failed to update!
+WARN : 2021-08-24 10:27:02 : Failed to update!
+WARN : 2021-08-24 10:27:02 : Failed to update!
+INFO : 2021-08-24 10:27:02 : Successfully retrieved all accounts!
+INFO : 2021-08-24 10:27:02 : Successfully retrieved all accounts!
+INFO : 2021-08-24 10:27:02 : Successfully retrieved all accounts!
+INFO : 2021-08-24 10:27:02 : Successfully retrieved all accounts!
+WARN : 2021-08-24 10:27:02 : Failed to delete!
+WARN : 2021-08-24 10:27:02 : Failed to delete!
+WARN : 2021-08-24 10:27:02 : Failed to delete!
+WARN : 2021-08-24 10:27:02 : Failed to delete!
+WARN : 2021-08-24 10:27:02 : Failed to delete!
+WARN : 2021-08-24 10:27:02 : Account Not Found!
+WARN : 2021-08-24 10:27:02 : Account Not Found!
+WARN : 2021-08-24 10:27:02 : Account Not Found!
+WARN : 2021-08-24 10:27:02 : Account Not Found!
+WARN : 2021-08-24 10:27:02 : Account Not Found!
+WARN : 2021-08-24 10:27:02 : Account Not Found!

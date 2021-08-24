@@ -145,9 +145,7 @@ public class GenericDaoImpl implements GenericDAO{
     @Override
     public boolean delete(Class<?> clazz, Object primaryKey) {
         int success = 0;
-        /*
-        Delete on primary key for tables without foreign key
-         */
+
         // Get all declared fields of clazz
         Field[] fields = clazz.getDeclaredFields();
 
@@ -294,7 +292,6 @@ public class GenericDaoImpl implements GenericDAO{
         Constructor<?>[] constructors = clazz.getDeclaredConstructors();
 
         try {
-            // Build SQL Statement
             assert connection != null;
 
             String sql = "SELECT * FROM \"" +
